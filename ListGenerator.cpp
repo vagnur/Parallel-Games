@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <list>
+#include <vector>
 #include <fstream>
 
 using namespace std;
@@ -19,8 +20,8 @@ list<bool>::iterator itbool2;
 list<list<bool> >::iterator itlist;
 
 void createList(char argv[]);
-void createAndInsert(int jugadores, bool game[],list<bool> part);
-void insert(list<Node>::iterator it,bool *sgame,int jugadores);
+void createAndInsert(int jugadores, vector<bool> game,list<bool> part);
+void insert(list<Node>::iterator it,vector<bool> game,int jugadores);
 
 /*
 Entrada del tipo
@@ -53,15 +54,14 @@ void createList(char nombre[]){
 	entrada >> juegos;
 	entrada >> jugadores;
 	while(juegos!=0){
-		bool *game;
-		game = (bool*)malloc(sizeof(bool)*jugadores);
+		vector<bool> game;
 		list<bool> part;
 		flag = 0;
 		//Lee juego y guarda la potencial cabecera
 		for (int j=0;j<jugadores;j++){
 			bool value;
 			entrada >> value;
-			game[j] = value;
+			game.push_back(value);
 			if(j<jugadores/2)
 				part.push_back(game[j]);
 		}
@@ -92,7 +92,7 @@ void createList(char nombre[]){
 }
 
 //Función para insertar cuando la cabecera ya existe
-void insert(list<Node>::iterator it,bool game[],int jugadores){
+void insert(list<Node>::iterator it,vector<bool> game,int jugadores){
 	list<bool> part2;
 	for(int i=jugadores/2;i<jugadores;i++)
 		part2.push_back(game[i]);
@@ -101,7 +101,7 @@ void insert(list<Node>::iterator it,bool game[],int jugadores){
 }
 
 //Función para insertar cuando la cabecera no existe
-void createAndInsert(int jugadores, bool game[],list<bool> part){
+void createAndInsert(int jugadores, vector<bool> game,list<bool> part){
 	Node node;
 	node.x.push_back(part);
 	node.cnodes=0;
